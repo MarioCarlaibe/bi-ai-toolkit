@@ -3,3 +3,7 @@ Considere o contexto.md e padroes_sla.md
 Crie uma query SQL para análise de SLA
 
 Atue como analista sênior e monte uma solução completa
+
+Considere o arquivo prompts/mailing_automovel_analise.md
+ou
+Use o prompt mailing_automovel_analise.md como base

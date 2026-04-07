@@ -18,12 +18,20 @@ Biblioteca prática para acelerar análises e dashboards (principalmente **SLA**
 - Prompts para Copilot/IA: [prompts](prompts)
 - Template de dashboard de SLA (layout + checklist): [templates/dashboard.md](templates/dashboard.md)
 - Documentação e padrões: [docs](docs)
+- Skills (guias de comportamento para IA): [skills](skills)
 
 Arquivos “âncora” do projeto:
 
 - Contexto do toolkit (como a IA deve se comportar): [contexto.md](contexto.md)
 - Padrões de SLA: [padroes_sla.md](padroes_sla.md)
 - Padrões de reutilização/nomeação: [docs/references/padroes-reutilizacao.md](docs/references/padroes-reutilizacao.md)
+
+Skills de referência (uso com IA/Copilot):
+
+- [skills/sql_skill.md](skills/sql_skill.md)
+- [skills/dax_skill.md](skills/dax_skill.md)
+- [skills/analise_skill.md](skills/analise_skill.md)
+- [skills/dashboard_skill.md](skills/dashboard_skill.md)
 
 ---
 
