@@ -1,0 +1,34 @@
+-- TEMPLATE: Medidas de insights automáticos (texto + alertas)
+-- Objetivo: suportar Smart Narrative e sinalização de problemas.
+
+SLA | Alerta - Taxa Atraso Alta =
+VAR Limite = 0.10
+RETURN IF ( [SLA | Taxa de Atraso] > Limite, 1, 0 )
+
+SLA | Alerta - Tempo Medio Alto =
+VAR LimiteHoras = 24
+RETURN IF ( [SLA | Tempo Medio Atendimento (Horas)] > LimiteHoras, 1, 0 )
+
+SLA | Insight - Resumo (Texto) =
+VAR Taxa = [SLA | Taxa de Atraso]
+VAR TempoH = [SLA | Tempo Medio Atendimento (Horas)]
+VAR Atrasadas = [SLA | Demandas Atrasadas]
+VAR Total = [SLA | Total de Demandas]
+VAR Linha1 =
+    "No período selecionado, "
+        & FORMAT ( Atrasadas, "#,0" )
+        & " de "
+        & FORMAT ( Total, "#,0" )
+        & " demandas estão atrasadas ("
+        & FORMAT ( Taxa, "0.0%" )
+        & ")."
+VAR Linha2 =
+    " O tempo médio de atendimento é " & FORMAT ( TempoH, "0.0" ) & "h."
+VAR Acao =
+    IF (
+        [SLA | Alerta - Taxa Atraso Alta] = 1 || [SLA | Alerta - Tempo Medio Alto] = 1,
+        " Priorize triagem e ajuste de capacidade nas equipes com pior desempenho.",
+        " Mantenha o acompanhamento por equipe/setor para prevenir regressões."
+    )
+RETURN
+    Linha1 & Linha2 & Acao

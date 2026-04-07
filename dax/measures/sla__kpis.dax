@@ -1,0 +1,40 @@
+Tempo Médio de Atendimento (Horas) =
+VAR DemandasConcluidas =
+    FILTER(
+        'Demandas',
+        NOT ISBLANK ( 'Demandas'[DataConclusao] )
+            && NOT ISBLANK ( 'Demandas'[DataAbertura] )
+            && 'Demandas'[DataConclusao] >= 'Demandas'[DataAbertura]
+    )
+VAR MediaMinutos =
+    AVERAGEX(
+        DemandasConcluidas,
+        DATEDIFF ( 'Demandas'[DataAbertura], 'Demandas'[DataConclusao], MINUTE )
+    )
+RETURN
+    DIVIDE ( MediaMinutos, 60, BLANK() )
+
+Total de Demandas =
+COUNTROWS ( 'Demandas' )
+
+Taxa de Atraso =
+VAR Total =
+    [Total de Demandas]
+VAR DataRef =
+    TODAY ()
+VAR Atrasadas =
+    CALCULATE(
+        COUNTROWS ( 'Demandas' ),
+        FILTER(
+            'Demandas',
+            NOT ISBLANK ( 'Demandas'[DataVencimento] )
+                && (
+                    ( NOT ISBLANK ( 'Demandas'[DataConclusao] )
+                        && 'Demandas'[DataConclusao] > 'Demandas'[DataVencimento] )
+                        || ( ISBLANK ( 'Demandas'[DataConclusao] )
+                            && DataRef > 'Demandas'[DataVencimento] )
+                )
+        )
+    )
+RETURN
+    DIVIDE ( Atrasadas, Total, 0 )

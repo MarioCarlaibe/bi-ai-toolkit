@@ -1,0 +1,45 @@
+-- TEMPLATE: Medidas DAX (KPIs) para SLA/Produtividade
+-- Ajuste nomes de tabela/colunas conforme o modelo.
+-- Convenção sugerida de nome: "SLA | ..." ou "Produtividade | ..."
+
+SLA | Total de Demandas =
+COUNTROWS ( 'Demandas' )
+
+SLA | Total Concluidas =
+CALCULATE ( [SLA | Total de Demandas], NOT ISBLANK ( 'Demandas'[DataConclusao] ) )
+
+SLA | Tempo Medio Atendimento (Horas) =
+VAR ConcluidasValidas =
+    FILTER(
+        'Demandas',
+        NOT ISBLANK ( 'Demandas'[DataAbertura] )
+            && NOT ISBLANK ( 'Demandas'[DataConclusao] )
+            && 'Demandas'[DataConclusao] >= 'Demandas'[DataAbertura]
+    )
+VAR MediaMinutos =
+    AVERAGEX(
+        ConcluidasValidas,
+        DATEDIFF ( 'Demandas'[DataAbertura], 'Demandas'[DataConclusao], MINUTE )
+    )
+RETURN
+    DIVIDE ( MediaMinutos, 60, BLANK() )
+
+SLA | Demandas Atrasadas =
+VAR DataRef = TODAY ()
+RETURN
+    CALCULATE(
+        COUNTROWS ( 'Demandas' ),
+        FILTER(
+            'Demandas',
+            NOT ISBLANK ( 'Demandas'[DataVencimento] )
+                && (
+                    ( NOT ISBLANK ( 'Demandas'[DataConclusao] )
+                        && 'Demandas'[DataConclusao] > 'Demandas'[DataVencimento] )
+                        || ( ISBLANK ( 'Demandas'[DataConclusao] )
+                            && DataRef > 'Demandas'[DataVencimento] )
+                )
+        )
+    )
+
+SLA | Taxa de Atraso =
+DIVIDE ( [SLA | Demandas Atrasadas], [SLA | Total de Demandas], 0 )

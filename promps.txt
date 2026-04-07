@@ -1,0 +1,5 @@
+Considere o contexto.md e padroes_sla.md
+
+Crie uma query SQL para análise de SLA
+
+Atue como analista sênior e monte uma solução completa
