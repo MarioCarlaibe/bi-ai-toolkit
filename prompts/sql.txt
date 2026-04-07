@@ -25,6 +25,8 @@ Antes de escrever a query, colete as informações abaixo (se algo não for info
 REQUISITOS TÉCNICOS (aplique sempre)
 - SQL Server (T-SQL).
 - Evite `SELECT *`.
+- Use `WITH (NOLOCK)` em **todas** as leituras de tabelas/views (em todo `FROM` e `JOIN`).
+- Prioridade do projeto: **performance e não bloqueio** acima de precisão transacional.
 - Use aliases claros e padronizados.
 - Estruture com CTEs quando melhorar legibilidade.
 - Garanta sargabilidade no filtro de data (não aplique funções na coluna filtrada).

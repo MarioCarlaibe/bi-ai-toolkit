@@ -18,7 +18,7 @@ WITH base AS (
         d.DataAbertura,
         d.DataConclusao,
         DATEDIFF(MINUTE, d.DataAbertura, d.DataConclusao) AS TempoAtendimentoMinutos
-    FROM dbo.Demandas AS d
+    FROM dbo.Demandas AS d WITH (NOLOCK)
     WHERE
         d.DataConclusao IS NOT NULL
         AND d.DataAbertura IS NOT NULL

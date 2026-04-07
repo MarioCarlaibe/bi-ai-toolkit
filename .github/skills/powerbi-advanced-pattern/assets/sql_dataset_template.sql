@@ -31,7 +31,7 @@ WITH base AS (
             WHEN d.DataConclusao IS NULL AND CAST(GETDATE() AS date) > CAST(d.DataVencimento AS date) THEN 1
             ELSE 0
         END AS FlagAtraso
-    FROM dbo.Demandas AS d
+    FROM dbo.Demandas AS d WITH (NOLOCK)
     WHERE
         -- Escolha UMA data driver para o filtro do período (ex.: DataAbertura)
         (@DataInicio IS NULL OR d.DataAbertura >= @DataInicio)

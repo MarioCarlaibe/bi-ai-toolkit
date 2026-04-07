@@ -80,7 +80,7 @@ WITH base AS (
             WHEN d.DataConclusao IS NULL AND @Agora > d.DataVencimento THEN DATEDIFF(MINUTE, d.DataVencimento, @Agora)
             ELSE 0
         END AS AtrasoMinutos
-    FROM dbo.Demandas AS d
+    FROM dbo.Demandas AS d WITH (NOLOCK)
     WHERE
         d.DataAbertura IS NOT NULL
         AND (@SomenteComVencimento = 0 OR d.DataVencimento IS NOT NULL)

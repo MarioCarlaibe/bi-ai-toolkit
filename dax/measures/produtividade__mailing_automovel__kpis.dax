@@ -1,0 +1,83 @@
+Produtividade | Mailing | Total Mailings (distintos) =
+DISTINCTCOUNT ( 'Mailing'[mailing_id] )
+
+Produtividade | Mailing | Total Eventos =
+COUNTROWS ( 'Mailing' )
+
+Produtividade | Mailing | CPCs (qtd) =
+SUM ( 'Mailing'[qtd_cpcs] )
+
+Produtividade | Mailing | Agendamentos (qtd) =
+SUM ( 'Mailing'[qtd_agendamentos] )
+
+Produtividade | Mailing | Contratações (qtd) =
+SUM ( 'Mailing'[qtd_contratacoes] )
+
+Produtividade | Mailing | Prêmio (R$) =
+SUM ( 'Mailing'[soma_premio_ref] )
+
+Produtividade | Mailing | Taxa de Contato (mailing) =
+VAR Total =
+    [Produtividade | Mailing | Total Mailings (distintos)]
+VAR Contatados =
+    CALCULATE ( DISTINCTCOUNT ( 'Mailing'[mailing_id] ), 'Mailing'[flag_contato_mailing] = 1 )
+RETURN
+    DIVIDE ( Contatados, Total, BLANK() )
+
+Produtividade | Mailing | Taxa de Conversão (contratação por mailing) =
+VAR Total =
+    [Produtividade | Mailing | Total Mailings (distintos)]
+VAR Convertidos =
+    CALCULATE ( DISTINCTCOUNT ( 'Mailing'[mailing_id] ), 'Mailing'[flag_contratacao_mailing] = 1 )
+RETURN
+    DIVIDE ( Convertidos, Total, BLANK() )
+
+Produtividade | Mailing | Taxa de Conversão (contratação por CPC) =
+VAR Contratacoes =
+    [Produtividade | Mailing | Contratações (qtd)]
+VAR CPCs =
+    [Produtividade | Mailing | CPCs (qtd)]
+RETURN
+    DIVIDE ( Contratacoes, CPCs, BLANK() )
+
+Produtividade | Mailing | Prêmio Médio por Contratação (R$) =
+VAR Premio =
+    [Produtividade | Mailing | Prêmio (R$)]
+VAR Contratacoes =
+    [Produtividade | Mailing | Contratações (qtd)]
+RETURN
+    DIVIDE ( Premio, Contratacoes, BLANK() )
+
+Produtividade | Mailing | CPCs por Mailing =
+VAR CPCs =
+    [Produtividade | Mailing | CPCs (qtd)]
+VAR Total =
+    [Produtividade | Mailing | Total Mailings (distintos)]
+RETURN
+    DIVIDE ( CPCs, Total, BLANK() )
+
+Produtividade | Mailing | Receita por Mailing (R$) =
+VAR Premio =
+    [Produtividade | Mailing | Prêmio (R$)]
+VAR Total =
+    [Produtividade | Mailing | Total Mailings (distintos)]
+RETURN
+    DIVIDE ( Premio, Total, BLANK() )
+
+Produtividade | Mailing | Mailings com Contratação (qtd) =
+CALCULATE ( DISTINCTCOUNT ( 'Mailing'[mailing_id] ), 'Mailing'[flag_contratacao_mailing] = 1 )
+
+Produtividade | Mailing | Mailings Contatados (qtd) =
+CALCULATE ( DISTINCTCOUNT ( 'Mailing'[mailing_id] ), 'Mailing'[flag_contato_mailing] = 1 )
+
+Produtividade | Mailing | Índice de Eficiência (Contratação por Contato) =
+VAR Convertidos =
+    [Produtividade | Mailing | Mailings com Contratação (qtd)]
+VAR Contatados =
+    [Produtividade | Mailing | Mailings Contatados (qtd)]
+RETURN
+    DIVIDE ( Convertidos, Contatados, BLANK() )
+
+-- IMPORTANTE (ajuste no Power BI):
+-- - Renomeie a tabela importada para 'Mailing' (ou ajuste as referências acima).
+-- - Garanta que a tabela calendário filtre 'Mailing'[dt_evento] (relação ativa) para análises por período.

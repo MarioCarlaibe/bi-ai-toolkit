@@ -17,6 +17,11 @@ Padronizar a geração e a revisão de consultas **T-SQL (SQL Server)** para Pow
 - Não inventar estruturas de banco, nomes de colunas ou regras de negócio.
 
 ## 3) Boas práticas obrigatórias
+### NOLOCK (requisito do toolkit)
+- Toda query deve aplicar `WITH (NOLOCK)` em **todas** as leituras de tabelas/views (`FROM` e `JOIN`).
+- Justificativa: neste contexto, **performance e não bloqueio** têm prioridade sobre precisão transacional.
+- Aplicar de forma consistente e explícita por tabela (evitar “esquecer” em algum `JOIN`).
+
 ### Contrato do dataset
 - Declarar explicitamente:
   - objetivo da query;
@@ -47,6 +52,7 @@ Padronizar a geração e a revisão de consultas **T-SQL (SQL Server)** para Pow
 - Agregar cedo demais e “perder” o grão por demanda, impedindo drill-through.
 - Usar filtro por data não sargável (ex.: `CAST(Data AS date)` na coluna filtrada).
 - Misturar datas “driver” sem deixar explícito (abertura vs conclusão vs vencimento).
+- Omitir `WITH (NOLOCK)` em alguma tabela (especialmente em `JOINs`).
 
 ## 5) Padrões voltados para uso no Power BI
 ### Dataset recomendado (SLA)

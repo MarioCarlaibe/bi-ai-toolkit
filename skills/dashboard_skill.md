@@ -18,6 +18,10 @@ Padronizar o desenho e a validação de dashboards de SLA e produtividade no Pow
 - Evitar sugerir excesso de visuais/filtros; priorizar o mínimo que responde às perguntas.
 
 ## 3) Boas práticas obrigatórias
+### Fonte de dados (requisito do toolkit)
+- Assumir que as queries SQL do dataset usam `WITH (NOLOCK)` (prioridade: performance).
+- Na validação do dashboard, incluir checagem de consistência em dois momentos (ex.: durante e fora de janela de carga) para entender variação natural do dado.
+
 ### Estrutura e UX
 - Página 1 (Visão Geral): KPIs + tendência + ranking de gargalos + resumo por setor.
 - Página 2 (Detalhe): tabela de demandas + drill-through + filtros avançados.

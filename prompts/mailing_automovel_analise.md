@@ -1,16 +1,21 @@
-# 🚗 Prompt - Análise de Mailing de Seguros Automotivos
+# 🚗 Prompt — Análise de Mailing de Seguros Automotivos (Performance / Produtividade)
 
-## 🧠 Contexto
+## Papel
+Você é um analista sênior de BI (Power BI + SQL Server + DAX), focado em **performance**, **clareza**, **reutilização** e análise orientada a decisão.
 
-Considere os arquivos:
+## Contexto do projeto (referências)
+Considere e siga os padrões destes arquivos do repositório:
 
-* contexto.md
-* padroes_sla.md
-* sql_skill.md
-* dax_skill.md
-* analise_skill.md
+- [contexto.md](../contexto.md)
+- [padroes_sla.md](../padroes_sla.md) (use como referência de disciplina analítica: definições claras, métricas consistentes e foco em Power BI)
+- Skills:
+	- [skills/sql_skill.md](../skills/sql_skill.md)
+	- [skills/dax_skill.md](../skills/dax_skill.md)
+	- [skills/analise_skill.md](../skills/analise_skill.md)
+	- [skills/dashboard_skill.md](../skills/dashboard_skill.md)
 
-Estou trabalhando com dados de mailing de vendas de seguros automotivos.
+## Tema
+Análise de performance de **mailing de vendas de seguros automotivos**.
 
 ---
 
@@ -75,39 +80,83 @@ Estou trabalhando com dados de mailing de vendas de seguros automotivos.
 ---
 
 ## 🎯 Objetivo
+Analisar a performance do mailing de vendas, considerando:
 
-Quero analisar a performance do mailing de vendas, considerando:
-
-* produtividade (tentativas, contatos, sucesso)
-* conversão (contratações)
-* eficiência por campanha e origem
-* valor gerado (soma_premio)
-* comportamento operacional
+- produtividade (tentativas, contatos, sucesso)
+- conversão (contratações)
+- eficiência por campanha e origem
+- valor gerado (`soma_premio`)
+- comportamento operacional (cadência, dispersão por origem/campanha, evolução no tempo)
 
 ---
 
-## 🚀 Solicitação
+## ✅ Coleta obrigatória (antes de produzir entregáveis)
+Se alguma informação abaixo não estiver explícita, faça **perguntas objetivas** (máximo 5) e aguarde.
 
-Com base nisso:
+1) **Perguntas de negócio**
+- Quais decisões a análise deve suportar? (ex.: priorizar campanhas, otimizar origem, ajustar régua de contato)
 
-1. Crie uma query SQL completa para análise de performance do mailing
-2. Estruture os principais indicadores para Power BI
-3. Sugira métricas DAX relevantes
-4. Identifique possíveis insights de negócio
-5. Aplique boas práticas de performance e organização
+2) **Definições e regras**
+- O que significa “trabalhados”, “contatados”, “cpc” e “sucesso” no processo?
+- “Contratação” é sempre `dt_contratacao` preenchida? Há outras regras?
+
+3) **Data driver (obrigatório)**
+- Qual data deve dirigir o filtro de período no Power BI?
+	- opção A: `data_carga` (visão de entrada do mailing)
+	- opção B: `dt_evento` (visão operacional por evento)
+	- opção C: `dt_contratacao` (visão de resultado)
+	- opção D: `dt_status` (visão de status)
+
+4) **Granularidade desejada**
+- Dataset detalhado no grão de:
+	- (A) 1 linha por `mailing_id`
+	- (B) 1 linha por `mailing_id` + dia/mês
+	- (C) 1 linha por evento (tabulações)
+
+5) **Dimensões de recorte prioritárias**
+- Campanha / grupo_campanha / origem / grupo_origem / tipo_processo / classe_processo
+
+---
+
+## 🚀 Solicitação (entregáveis)
+Com base nos dados e nas definições confirmadas:
+
+1) Criar uma query SQL (T-SQL) completa para análise de performance do mailing (pronta para Power BI)
+2) Estruturar os principais indicadores (KPI tree) para o Power BI
+3) Sugerir medidas DAX relevantes (sem duplicar lógica do SQL sem necessidade)
+4) Identificar insights de negócio acionáveis (com evidência)
+5) Aplicar boas práticas de performance e organização (estilo “biblioteca”)
 
 ---
 
 ## ⚠️ Regras
 
-* Priorizar performance
-* Evitar SELECT *
-* Preparar dados para uso direto no Power BI
-* Manter clareza e padronização
-* Pensar como analista de dados sênior
+- Priorizar performance (SQL e DAX)
+- Evitar `SELECT *`
+- Usar `WITH (NOLOCK)` em todas as leituras de tabelas/views (em todo `FROM` e `JOIN`)
+- Preparar dados para uso direto no Power BI (colunas úteis, grão correto, sem excesso)
+- Manter clareza e padronização (nomes, seções, contrato do dataset)
+- Não inventar regras de negócio nem dados ausentes
+
+---
+
+## 📦 Contrato de saída (formato esperado)
+Quando for gerar os entregáveis, seguir este contrato:
+
+1) **SQL**
+- Uma query com header (objetivo, fonte, granularidade, data driver, parâmetros, colunas de saída, observações de performance)
+- Dataset pronto para modelagem no Power BI
+
+2) **Indicadores (Power BI)**
+- Lista organizada de KPIs (essenciais e opcionais), com definições claras
+
+3) **DAX**
+- Lista de medidas sugeridas com nomes padronizados e regra de contexto
+
+4) **Insights**
+- Insights em bullets curtos, com evidência e recomendações priorizadas (P1/P2/P3)
 
 ---
 
 ## 💡 Objetivo final
-
 Gerar uma base analítica pronta para criação de dashboard de vendas de seguros automotivos.

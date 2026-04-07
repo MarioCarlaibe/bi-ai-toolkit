@@ -19,6 +19,10 @@ Definir um padrão sênior para criação/revisão de **medidas DAX** focadas em
 - Se faltar informação, perguntar objetivamente e aguardar (máx. 5 perguntas).
 
 ## 3) Boas práticas obrigatórias
+### Integração com SQL (requisito do toolkit)
+- Quando a entrega envolver dataset SQL (fonte do modelo), exigir que a query use `WITH (NOLOCK)` em todas as tabelas/views.
+- Assumir que podem existir pequenas inconsistências de leitura; portanto, reforçar validações por amostragem e comportamento de BLANK/0 para evitar interpretações erradas.
+
 ### Nomenclatura e organização
 - Usar nomes claros e padronizados (ex.: prefixo de domínio “SLA | …”, “Produtividade | …”).
 - Agrupar por “pastas de exibição” no Power BI quando aplicável (ex.: SLA, Produtividade, Qualidade).

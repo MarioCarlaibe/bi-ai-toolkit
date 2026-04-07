@@ -19,6 +19,10 @@ Padronizar a **análise sênior** de SLA e produtividade (insights acionáveis) 
   - Prompt de análise (formato de saída): [prompts/analise.txt](../prompts/analise.txt)
 
 ## 3) Boas práticas obrigatórias
+### Consistência de leitura (requisito do toolkit)
+- Considerar que o dataset pode ser alimentado por queries com `WITH (NOLOCK)` (prioridade: performance).
+- Quando houver variação “estranha” de números, sugerir validação em janelas estáveis (fora de carga) e checagem por amostragem para evitar conclusões indevidas.
+
 ### Estrutura do raciocínio
 - Começar por um resumo executivo (3–6 bullets) com:
   - direção (melhorou/piorou/estável);
