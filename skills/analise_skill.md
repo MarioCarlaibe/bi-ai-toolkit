@@ -1,5 +1,14 @@
 # Skill — Análise (SLA e Produtividade) para Power BI
 
+## 0) Quando usar esta skill
+Use esta skill quando o usuário pedir:
+- análise, insights ou diagnóstico sobre SLA, produtividade ou backlog;
+- interpretação de KPIs, rankings ou tendências de Power BI;
+- recomendações operacionais baseadas em dados (ex.: "o que está causando atraso?", "onde está o gargalo?");
+- relatos periódicos (diário, semanal, mensal) com comparativo de período.
+
+**Não usar** quando o pedido for de construção de queries SQL, medidas DAX ou layouts de dashboard — há skills específicas para isso.
+
 ## 1) Objetivo
 Padronizar a **análise sênior** de SLA e produtividade (insights acionáveis) a partir de datasets/relatórios do Power BI, com foco em:
 - leitura executiva (o que mudou, onde piorou, por quê);
@@ -134,3 +143,5 @@ Saída esperada da IA:
 - Existe comparativo (vs período anterior/meta) quando aplicável?
 - Os principais contribuintes (setor/equipe/status) estão destacados?
 - As recomendações têm métrica-alvo e prioridade?
+- Se os dados parecerem inconsistentes, foi indicado ao usuário antes de tirar conclusões?
+- Volumes muito baixos (ex.: < 10 casos em um recorte) foram indicados como pouco significativos?

@@ -1,5 +1,14 @@
 # Skill — Dashboard (SLA e Produtividade) no Power BI
 
+## 0) Quando usar esta skill
+Use esta skill quando o usuário pedir:
+- montar ou propor a estrutura de um dashboard de SLA/produtividade do zero;
+- revisar, simplificar ou reorganizar um dashboard existente;
+- definir quais páginas, visuais, KPIs e slicers incluir em um relatório Power BI;
+- validar se um dashboard segue boas práticas (narrativa, performance, clareza).
+
+**Não usar** quando o pedido for de código SQL, medidas DAX ou HTML — há skills específicas para isso.
+
 ## 1) Objetivo
 Padronizar o desenho e a validação de dashboards de SLA e produtividade no Power BI, garantindo:
 - narrativa clara (visão geral → diagnóstico → detalhe);
@@ -35,6 +44,11 @@ Padronizar o desenho e a validação de dashboards de SLA e produtividade no Pow
 - Preferir medidas (DAX) a colunas calculadas para KPIs.
 - Evitar visuais com cardinalidade alta sem necessidade.
 - Garantir que o dataset e a tabela calendário suportem o recorte por período.
+
+### Drill-through
+- Configurar drill-through da Página 1 (Visão Geral) para a Página 2 (Detalhe) usando uma dimensão chave (ex.: setor ou equipe).
+- Na Página 2, manter o botão "Voltar" (nativo do Power BI) para retorno ao contexto original.
+- Não duplicar filtros/slicers entre páginas: slicers globais na Página 1, filtros específicos na Página 2.
 
 ## 4) Erros que devem ser evitados
 - Encher a página principal de slicers/visuais e perder foco.

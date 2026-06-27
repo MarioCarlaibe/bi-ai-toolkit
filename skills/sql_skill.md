@@ -1,5 +1,14 @@
 # Skill — SQL (SLA e Produtividade) para Power BI
 
+## 0) Quando usar esta skill
+Use esta skill quando o usuário pedir:
+- criar ou revisar uma query T-SQL para alimentar um relatório Power BI;
+- gerar um dataset de SLA ou produtividade (grão por demanda ou agregado);
+- diagnosticar lentidão, divergência ou erro em query já em uso no Power BI;
+- derivar uma nova query a partir do dataset base (`sla__dataset_demandas.sql`).
+
+**Não usar** quando o pedido for de medidas DAX, HTML ou layout de dashboard — há skills específicas para isso.
+
 ## 1) Objetivo
 Padronizar a geração e a revisão de consultas **T-SQL (SQL Server)** para Power BI, entregando **datasets prontos para análise** (principalmente SLA e produtividade), com foco em:
 - clareza de leitura e manutenção;
@@ -45,6 +54,11 @@ Padronizar a geração e a revisão de consultas **T-SQL (SQL Server)** para Pow
 - Evitar `SELECT *`.
 - Usar aliases claros e consistentes.
 - Estruturar em CTEs por intenção (ex.: `base`, `normalizado`, `agregado`).
+
+### Compatibilidade com Power BI
+- Power BI não executa múltiplos resultsets em uma fonte: a query deve terminar com exatamente um `SELECT`.
+- Evitar `DECLARE` e `SET` antes do `SELECT` quando a conexão usar "Consulta Nativa" (Direct Query ou Import) — parâmetros devem vir via Power Query (`@DataInicio`, `@DataFim`) ou filtro no próprio `WHERE`.
+- Se necessário usar variáveis/CTEs complexas, encapsular em uma view ou procedure e apontar para ela no Power BI.
 
 ## 4) Erros que devem ser evitados
 - Criar query que não funciona como fonte para Power BI (ex.: múltiplos resultsets, colunas desnecessárias, grão inconsistente).

@@ -1,5 +1,14 @@
 # Skill — DAX (SLA e Produtividade) para Power BI
 
+## 0) Quando usar esta skill
+Use esta skill quando o usuário pedir:
+- criar ou revisar medidas DAX de SLA, produtividade ou qualidade;
+- calcular KPIs como % SLA, tempo médio, taxa de atraso, backlog;
+- diagnosticar medidas lentas ou com resultado errado no Power BI;
+- definir comportamento de BLANK/0, contexto de filtro ou relação de datas.
+
+**Não usar** quando o pedido for de SQL, HTML ou estrutura de dashboard — há skills específicas para isso.
+
 ## 1) Objetivo
 Definir um padrão sênior para criação/revisão de **medidas DAX** focadas em SLA e produtividade, garantindo:
 - consistência de definições (no prazo/fora do prazo/em andamento);
@@ -28,10 +37,11 @@ Definir um padrão sênior para criação/revisão de **medidas DAX** focadas em
 - Agrupar por “pastas de exibição” no Power BI quando aplicável (ex.: SLA, Produtividade, Qualidade).
 
 ### Performance
-- Preferir agregações simples quando possível; usar iteradores somente quando necessário.
-- Usar variáveis para evitar repetição e melhorar legibilidade.
+- Preferir agregações simples (`SUM`, `COUNTROWS`, `COUNTBLANK`) quando possível; usar iteradores (`SUMX`, `AVERAGEX`, `COUNTX`) somente quando necessário.
+- Usar variáveis para evitar repetição e melhorar legibilidade — recalcular o mesmo `CALCULATE` duas vezes na mesma medida é custo duplo.
 - Usar `DIVIDE()` para percentuais e razões.
 - Controlar filtros com clareza (respeitar/ignorar filtros conscientemente).
+- Para medidas usadas em matrizes com muitas linhas/colunas: medir com o Analisador de Desempenho do Power BI antes de otimizar; otimização prematura piora a legibilidade sem ganho real.
 
 ### Definições consistentes
 - Definir “atraso” e “cumprimento de SLA” de forma objetiva:
@@ -115,7 +125,8 @@ Saída esperada da IA:
 - Medida com comportamento consistente em qualquer filtro/visual
 
 ## Checklist rápido (antes de publicar medidas)
-- As definições (atraso, concluído, em andamento) estão consistentes?
+- As definições (atraso, concluído, em andamento) estão consistentes com o SQL?
 - As medidas respeitam filtros de período e dimensões?
 - As medidas evitam iterações desnecessárias?
 - O retorno BLANK/0 está alinhado ao uso no dashboard?
+- Se a fonte SQL já entrega `FlagAtraso` ou `StatusSLA`, a medida DAX consome a coluna em vez de recalcular?
